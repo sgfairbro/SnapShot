@@ -4,11 +4,10 @@ import Gallery from "./Gallery";
 import Loader from "./Loader";
 
 const Container = ({ searchTerm }) => {
-  const { images, loading, runSearch } = useContext(PhotoContext);
+  const { images, loading, getImages } = useContext(PhotoContext);
   useEffect(() => {
-    runSearch(searchTerm);
-    // eslint-disable-next-line
-  }, [searchTerm]);
+    getImages();
+  });
 
   return (
     <div className="photo-container">
