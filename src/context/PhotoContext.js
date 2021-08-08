@@ -1,29 +1,40 @@
 import React, { createContext, useState } from "react";
-import axios from "axios";
 import { apiKey } from "../api/config";
 export const PhotoContext = createContext();
 
+var axios = require('axios');
+
+var config = {
+  method: 'get',
+  url: 'https://api.imgur.com/3/account/sgfairbro/image/QSGahtD',
+  headers: { 
+    'Authorization': apiKey, 
+    'Cookie': 'postpagebeta=1'
+  }
+};
+
+let initialImages = []
+
 const PhotoContextProvider = props => {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(initialImages);
   const [loading, setLoading] = useState(true);
-  const runSearch = query => {
-    axios
-      .get(
-        `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
-      )
+  const getImages = query => {
+    axios(config)
       .then(response => {
-        setImages(response.data.photos.photo);
+        console.log(JSON.stringify(response.data));
+        setImages(initialImages => [...initialImages, response.data]);
         setLoading(false);
+        console.log(response);
       })
       .catch(error => {
         console.log(
-          "Encountered an error with fetching and parsing data",
+          "Fuck me.",
           error
         );
       });
   };
   return (
-    <PhotoContext.Provider value={{ images, loading, runSearch }}>
+    <PhotoContext.Provider value={{ images, loading, getImages }}>
       {props.children}
     </PhotoContext.Provider>
   );
