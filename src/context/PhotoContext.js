@@ -13,8 +13,6 @@ var config = {
   }
 };
 
-let initialImages = []
-
 const PhotoContextProvider = props => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
