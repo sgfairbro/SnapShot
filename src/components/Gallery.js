@@ -6,11 +6,11 @@ const Gallery = props => {
   let images;
   let noImages;
   // map variables to each item in fetched image array and return image component
-  if (results.length > 0) {
-    images = results.map(image => {
-      let id = image.data.id;
-      let title = image.data.title;
-      let url = image.data.link;
+  if (results.data.length > 0) {
+    images = results.data.map(image => {
+      let id = image.id;
+      let title = image.title;
+      let url = image.link;
       return <Image url={url} key={id} alt={title} />;
     });
   } else {

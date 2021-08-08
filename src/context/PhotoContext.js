@@ -6,7 +6,7 @@ var axios = require('axios');
 
 var config = {
   method: 'get',
-  url: 'https://api.imgur.com/3/account/sgfairbro/image/QSGahtD',
+  url: 'https://api.imgur.com/3/account/sgfairbro/images',
   headers: { 
     'Authorization': apiKey, 
     'Cookie': 'postpagebeta=1'
@@ -16,19 +16,19 @@ var config = {
 let initialImages = []
 
 const PhotoContextProvider = props => {
-  const [images, setImages] = useState(initialImages);
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const getImages = query => {
     axios(config)
       .then(response => {
         console.log(JSON.stringify(response.data));
-        setImages(initialImages => [...initialImages, response.data]);
+        setImages(response.data);
         setLoading(false);
         console.log(response);
       })
       .catch(error => {
         console.log(
-          "Fuck me.",
+          "Error fetching image data: ",
           error
         );
       });
